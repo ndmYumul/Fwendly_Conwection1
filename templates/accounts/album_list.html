@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h3>My Albums</h3>
+    <a href="{% url 'accounts:album_add' %}" class="btn btn-success btn-sm">+ New Album</a>
+  </div>
+  <div class="row mt-3">
+    {% for a in albums %}
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm">
+          {% with cover=a.images.first %}
+            {% if cover %}
+              <img src="{{ cover.image.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
+            {% else %}
+              <div class="card-img-top d-flex align-items-center justify-content-center" style="height:200px; background:#eee;">No cover</div>
+            {% endif %}
+          {% endwith %}
+          <div class="card-body">
+            <h5>{{ a.name }}</h5>
+            <p class="text-muted">{{ a.images.count }} photo{{ a.images.count|pluralize }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No albums yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

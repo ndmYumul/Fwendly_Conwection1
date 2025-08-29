@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h3>Recent Visitors</h3>
+  <ul class="list-group">
+    {% for v in visits %}
+      <li class="list-group-item d-flex justify-content-between">
+        <a href="{% url 'accounts:profile' v.visitor.username %}">{{ v.visitor.username }}</a>
+        <small class="text-muted">{{ v.visited_at|date:"M d, Y H:i" }}</small>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No recent visitors yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

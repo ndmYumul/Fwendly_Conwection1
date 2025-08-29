@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h3>Edit Profile</h3>
+<form method="post" enctype="multipart/form-data" class="card p-3 shadow-sm">{% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success mt-3">Save</button>
+  <a class="btn btn-secondary mt-3" href="{% url 'accounts:my_profile' %}">Cancel</a>
+</form>
+{% endblock %}

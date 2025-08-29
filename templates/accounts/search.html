@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h3 class="mb-3">Search Users</h3>
+
+  <form method="get" class="mb-4">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Search by username or interest" value="{{ query|default:'' }}">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+
+  <div class="list-group">
+    {% for u in results %}
+      <div class="list-group-item d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+          {% if u.profile.profile_pic %}
+            <img src="{{ u.profile.profile_pic.url }}" alt="pic" style="width:48px;height:48px;object-fit:cover;border-radius:50%;">
+          {% else %}
+            <div style="width:48px;height:48px;border-radius:50%;background:#eee;"></div>
+          {% endif %}
+          <div>
+            <a href="{% url 'accounts:profile' u.username %}" class="fw-semibold">{{ u.username }}</a><br>
+            <small class="text-muted">{{ u.profile.location|default:"Location not set" }}</small>
+          </div>
+        </div>
+
+        {% if user.is_authenticated and user != u %}
+          <a href="{% url 'accounts:send_friend_request' u.id %}" class="btn btn-sm btn-outline-success">Add friend</a>
+        {% endif %}
+      </div>
+    {% empty %}
+      <div class="alert alert-info">No users matched your search.</div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

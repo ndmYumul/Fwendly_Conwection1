@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center">
+    <h3>My Gallery</h3>
+    <a href="{% url 'accounts:add_gallery_image' %}" class="btn btn-success btn-sm">+ Add Image</a>
+  </div>
+  <div class="row mt-3">
+    {% for img in gallery %}
+      <div class="col-md-3 mb-3">
+        <div class="card">
+          <img src="{{ img.image.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
+          <div class="card-body">
+            <p>{{ img.caption }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No images yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

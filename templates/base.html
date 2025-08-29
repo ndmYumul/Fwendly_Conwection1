@@ -1,0 +1,49 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fwendly Conwection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="theme-{{ request.user.profile.theme_choice|default:'default' }}">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'accounts:dashboard' %}">🌐 Fwenly Conwection</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'accounts:search' %}">Search</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'accounts:my_profile' %}">My Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'accounts:visitor_log' %}">Visitors</a></li>
+          <li class="nav-item"><a class="nav-link text-danger" href="{% url 'accounts:logout' %}">Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'accounts:register' %}">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-3">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<main class="container mt-4">
+  {% block content %}{% endblock %}
+</main>
+
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

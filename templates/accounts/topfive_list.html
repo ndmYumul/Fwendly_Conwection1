@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>My Top 5</h3>
+    <a href="{% url 'accounts:topfive_add' %}" class="btn btn-success btn-sm">+ Add</a>
+  </div>
+  <div class="row">
+    {% for tf in tfs %}
+      <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5>{{ tf.title }}</h5>
+            <ul>{% for item in tf.list_items %}<li>{{ item }}</li>{% endfor %}</ul>
+            <a href="{% url 'accounts:topfive_delete' tf.pk %}" class="btn btn-danger btn-sm">Delete</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No Top 5 created yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
